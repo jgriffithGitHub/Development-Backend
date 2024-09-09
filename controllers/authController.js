@@ -9,7 +9,8 @@ const generateToken = (user) => {
 // Register a new user
 exports.registerUser = async (req, res) => {
   const { username, email, password } = req.body;
-
+  console.log("req.body = " + JSON.stringify(req.body));
+  
   try {
     const userExists = await User.findOne({ email });
     if (userExists) {
@@ -29,7 +30,7 @@ exports.registerUser = async (req, res) => {
       token: generateToken(user),
     });
   } catch (error) {
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Server error: ' + error});
   }
 };
 
