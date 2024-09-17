@@ -9,7 +9,6 @@ const generateToken = (user) => {
 // Register a new user
 exports.registerUser = async (req, res) => {
   const { username, email, password } = req.body;
-  console.log("req.body = " + JSON.stringify(req.body));
   
   try {
     const userExists = await User.findOne({ email });
@@ -46,12 +45,12 @@ exports.loginUser = async (req, res) => {
         _id: user._id,
         username: user.username,
         email: user.email,
-        token: generateToken(user),
+        token: generateToken(user)
       });
     } else {
       res.status(401).json({ message: 'Invalid credentials' });
     }
   } catch (error) {
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Server error: ' + error });
   }
 };
